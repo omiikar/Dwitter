@@ -7,7 +7,7 @@ contract Dwitter{
     struct Users{
         address User_ID;
         string Name;
-        uint8 pin;
+        uint pin;
         bool log;
         bool verified;
         bool account_status;
@@ -28,17 +28,18 @@ contract Dwitter{
         owner = msg.sender;
     }
     
-    function signUp(string memory _Name, uint8 _pin)public{
+    function signUp(string memory _Name, uint _pin)public{
         require(user[msg.sender].User_ID == address(0),"User Already Registered");
-        user[msg.sender].User_ID;
-        user[msg.sender].Name;
-        user[msg.sender].pin;
+        user[msg.sender].User_ID=msg.sender;
+        user[msg.sender].Name=_Name;
+        user[msg.sender].pin=_pin;
+        user[msg.sender].account_status=true;
         emit Login("User Registered Successfully");
     }
     
-    function signIn(uint8 _pin)public{
-        require(user[msg.sender].User_ID != address(0),"User Not Registered");
-        require(user[msg.sender].pin != _pin,"Invalid PIN" );
+    function signIn(uint _pin)public{
+        require(user[msg.sender].User_ID == msg.sender,"User Not Registered");
+        require(user[msg.sender].pin == _pin,"Invalid PIN" );
         user[msg.sender].log=true;
         emit Login("Login Successful");
     }
@@ -60,10 +61,10 @@ contract Dwitter{
     
     function deleteMyAccount() public{
         delete user[msg.sender];
+        emit Login("Account Deleted");
     }
     
-    function verifyAccount(address _user_to_verfiy) public{
-        require(msg.sender == owner, "Access Denied..!! Not Owner");
+    function verifyAccount(address _user_to_verfiy) public onlyOwner{
         user[_user_to_verfiy].verified = true;
     }
     

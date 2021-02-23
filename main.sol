@@ -94,7 +94,7 @@ contract Dwitter{
         emit Login("Tweet Successful");
     }
     
-    function showTweets(address _user_address, uint _uid)public view returns(string[] memory) {
+    function showTweets(address _user_address)public view returns(string[] memory) {
         return tweets[_user_address];
     }
     

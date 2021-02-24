@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 contract Dwitter{
     
     address owner;
-
+    
     struct Users{
         address User_ID;
         string Name;
@@ -19,9 +19,7 @@ contract Dwitter{
     
   
     mapping(address=>Users) user; 
-    
 
-    
     event Login(string msg);
     
     modifier onlyOwner(){
@@ -104,6 +102,26 @@ contract Dwitter{
         
         user[_user_address].followers = msg.sender;
         user[msg.sender].following = _user_address;
+    }
+       
+    function likeTweets(address _user_address,uint tweet_UID)public{
+        string[] memory showingTweets;
+        showingTweets = showTweets(_user_address);
+        like[msg.sender].push(showingTweets[tweet_UID]);
+    }
+    
+    function reTweets(address _user_address,uint tweet_UID)public{
+        string[] memory showingReTweets;
+        showingReTweets = showTweets(_user_address);
+        retweet[msg.sender].push(showingReTweets[tweet_UID]);
+    }
+    
+    function showReTweets(address _user_address)public view returns(string[] memory){
+        return retweet[_user_address];
+    }
+    
+    function showLikes(address _user_address)public view returns(string[] memory){
+        return like[_user_address];
     }
     
 }

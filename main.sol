@@ -34,7 +34,7 @@ contract Dwitter{
     }
     
     modifier stopOwner{
-        require (user[msg.sender].User_ID!=msg.sender, "Owner Cannot Modifiy Data");
+        require (user[msg.sender].User_ID==msg.sender, "Owner Cannot Modifiy Data");
         _;
     }
     

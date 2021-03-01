@@ -86,6 +86,7 @@ contract Dwitter{
     
     function verifyAccount(address _user_to_verfiy) public onlyOwner{
         user[_user_to_verfiy].verified = true;
+        emit Login("Account Verified");
     }
     
 //--------------------------------User Data Management--------------------------------    
@@ -103,6 +104,7 @@ contract Dwitter{
         emit Login("Tweet Successful");
     }
     
+ // used to get address of the users twitted
     function showTweets(address _user_address)public checkLogin view returns(string[] memory) {
         return tweets[_user_address];
     }
